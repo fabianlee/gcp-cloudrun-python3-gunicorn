@@ -25,7 +25,7 @@ make test-local-gunicorn
 ```
 # enable GCP project level services
 export PYTHONWARNINGS="ignore:Unverified HTTPS request"
-gcloud services enable cloudbuild.googleapis.com artifactregistry.googleapis.com
+gcloud services enable cloudbuild.googleapis.com artifactregistry.googleapis.com run.googleapis.com
 
 # setup variables
 app_name="${PWD##*/}"
