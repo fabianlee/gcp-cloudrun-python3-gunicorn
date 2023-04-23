@@ -22,9 +22,10 @@ forwarded_allowed_ips = "*" if not 'forwarded_allowed_ips' in locals() else "127
 # https://docs.gunicorn.org/en/stable/settings.html#worker-class
 worker_class = "gthread"
 if not 'workers' in locals():
-  workers = 2
-  #workers = multiprocessing.cpu_count()*2+1
-#print(f"workers calculated as (cpu*2+1), so using {workers}")
+  workers = multiprocessing.cpu_count()*2+1
+  if workers > 8:
+    workers = 8
+print(f"using workers calculated as (cpu*2+1) with ceiling of 8: {workers}")
 
 # https://docs.gunicorn.org/en/stable/settings.html#threads
 # https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service
