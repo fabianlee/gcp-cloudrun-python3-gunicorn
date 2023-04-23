@@ -37,7 +37,7 @@ gcloud run deploy $app_name --source=. --region=$region --ingress=all --allow-un
 
 # show details of deployment
 gcloud run services list
-gcloud run services describe $_app_name --region=$region
+gcloud run services describe $app_name --region=$region
 
 # test pull of content
 run_url=$(gcloud run services describe $app_name --region=$region --format='value(status.url)')
