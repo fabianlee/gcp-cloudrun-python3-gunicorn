@@ -60,3 +60,8 @@ gcloud run deploy $app_name --region=$region --ingress=all --allow-unauthenticat
 
 ```
 
+### Show logs of Cloud Run app
+
+```
+gcloud logging read "resource.type = \"cloud_run_revision\" AND resource.labels.service_name = \"gcp-cloudrun-python3-gunicorn\" AND resource.labels.location = us-east1 AND severity>=DEFAULT" | grep -i textpayload
+```
