@@ -74,4 +74,3 @@ gcloud services enable cloudbuild.googleapis.com secretmanager.googleapis.com
 TODO
 ```
 
-
