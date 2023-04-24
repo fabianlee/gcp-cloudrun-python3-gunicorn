@@ -65,3 +65,11 @@ gcloud run deploy $app_name --region=$region --ingress=all --allow-unauthenticat
 ```
 gcloud logging read "resource.type = \"cloud_run_revision\" AND resource.labels.service_name = \"$app_name\" AND resource.labels.location = $region AND severity>=DEFAULT AND textPayload !=''" --format="value(textPayload)" --limit 10
 ```
+
+
+### Connect Github to to build trigger
+
+```
+gcloud services enable cloudbuild.googleapis.com secretmanager.googleapis.com
+TODO
+```
