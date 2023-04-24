@@ -73,4 +73,3 @@ gcloud logging read "resource.type = \"cloud_run_revision\" AND resource.labels.
 gcloud services enable cloudbuild.googleapis.com secretmanager.googleapis.com
 TODO
 ```
-
