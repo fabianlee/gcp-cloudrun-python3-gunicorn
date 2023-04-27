@@ -8,6 +8,10 @@ Test and deploy GCP Cloud Run Python Gunicorn web application.
 # make sure essential OS packages are installed
 sudo apt-get install software-properties-common python3 python3-dev python3-pip python3-venv make curl git -y
 
+# download project
+git clone https://github.com/fabianlee/gcp-cloudrun-python3-gunicorn.git
+cd gcp-cloudrun-python3-gunicorn
+
 # create and load virtual env
 python3 -m venv .
 source bin/activate
