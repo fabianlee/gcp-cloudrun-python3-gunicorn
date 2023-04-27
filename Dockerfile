@@ -2,8 +2,9 @@ FROM python:3.10.4-slim-bullseye as builder
 
 # Extra python env
 ENV PYTHONDONTWRITEBYTECODE=0
-ENV PYTHONUNBUFFERED=1
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+# logs written immediately 
+ENV PYTHONUNBUFFERED=1
 
 # pip modules determined from 'pip freeze' during local development
 COPY requirements.txt /.
