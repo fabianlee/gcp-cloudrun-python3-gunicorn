@@ -12,21 +12,21 @@ log = app.logger
 # returns json response
 @app.route('/json/<path:path>')
 def show_json(path):
-    return jsonify(type='OK',status=200,response=f"this is json called as: json/{path}"), 200
+    return jsonify(type='OK',status=200,response=f"this is json called as: /json/{path}"), 200
 
 # returns template file response
 @app.route('/template/<path:path>')
 def show_template(path):
-    return render_template("template.html", message=f"this is a template called as: template/{path}"), 200
+    return render_template("template.html", message=f"this is a template called as: /template/{path}"), 200
 
 # catch-all with simple text response
 @app.route('/', defaults={'path':''})
 @app.route('/<path:path>')
 def show_default(path):
-    return f"{MESSAGE} called as: {path}"
+    return f"{MESSAGE} called as: /{path}"
 
 
-# message from env var
+# message from env var, with fallback
 MESSAGE = os.getenv("MESSAGE","Hello, World!")
 
 # called as Flask app
