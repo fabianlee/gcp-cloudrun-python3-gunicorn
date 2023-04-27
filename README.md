@@ -13,11 +13,10 @@ python3 -m venv .
 pip install -r requirements.txt
 
 # run Python Flask app locally, open local browser to http://localhost:8080
-make test-local-flask
+python3 -m hellomodule.app run --port 8080
 
-# OR run Python Gunicorn app locally, open local browser to http://localhost:8080
-make test-local-gunicorn
-
+# OR run Gunicorn locally, open local browser to http://localhost:8080
+gunicorn --config gunicorn.conf.py --log-config=gunicorn-logging.conf hellomodule.app:app
 ```
 
 ### Deploying to GCP CloudRun with single deploy command
@@ -45,7 +44,7 @@ echo "CloudRun app at: $run_url"
 curl $run_url
 ```
 
-### Deploying to GCP CloudRun with build then deploy command
+### Deploying to GCP CloudRun with separate build and deploy commands
 
 ```
 # make sure Artifact Registry repo exists
@@ -70,6 +69,18 @@ gcloud logging read "resource.type = \"cloud_run_revision\" AND resource.labels.
 ### Connect Github to to build trigger
 
 ```
-gcloud services enable cloudbuild.googleapis.com secretmanager.googleapis.com
-TODO
+gcloud services enable cloudbuild.googleapis.com secretmanager.googleapis.com sourcerepo.googleapis.com
+project_id=$(gcloud config get project)
+project_number=$(gcloud projects list --filter="id=$project_id" --format="value(projectNumber)")
+
+# show Cloud Run service account permissions
+# will return single role: 'roles/cloudbuild.builds.builder'
+service_account="$project_number@cloudbuild.gserviceaccount.com"
+gcloud projects get-iam-policy $project_id --flatten='bindings[].members' --filter="bindings.members:serviceaccount:${service_account}" --format='value(bindings.role)'
+
+# assign IAM roles
+for role in roles/run.admin roles/iam.serviceAccountUser roles/secretmanager.secretAccessor; do
+gcloud projects add-iam-policy-binding $project_id --member=serviceAccount:$service_account --role=$role > /dev/null
+done
+
 ```
