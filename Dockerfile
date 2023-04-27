@@ -8,7 +8,7 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1
 # pip modules determined from 'pip freeze' during local development
 COPY requirements.txt /.
 RUN set -ex \
-  && pip install -r requirements.txt
+  && pip install --no-cache-dir -r requirements.txt
 
 # python configuration for gunicorn app
 COPY gunicorn.conf.py /.
