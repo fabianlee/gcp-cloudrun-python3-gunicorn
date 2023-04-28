@@ -1,7 +1,8 @@
 # https://cloud.google.com/build/docs/building/build-containers#use-buildconfig
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO//gcp-cloudrun-python3-gunicorn:2.0.0', '.' ]
+  args: [ 'build', '-t', '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:$COMMIT_SHA', '.' ]
+images: [ $_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:$COMMIT_SHA ]
 options:
   logging: CLOUD_LOGGING_ONLY
 substitutions:
