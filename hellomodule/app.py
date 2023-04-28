@@ -27,7 +27,7 @@ def show_default(path):
 
 
 # message from env var, with fallback
-MESSAGE = os.getenv("MESSAGE","Hello, World!")
+MESSAGE = os.getenv("MESSAGE","Hello, World2!")
 
 # called as Flask app
 if __name__ == '__main__' or __name__ == "main":
