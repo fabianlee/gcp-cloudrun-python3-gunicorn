@@ -1,11 +1,12 @@
 # https://cloud.google.com/build/docs/building/build-containers#use-buildconfig
+# https://cloud.google.com/build/docs/build-config-file-schema#images
 steps:
 
-# build and tag
+# Docker build and tag
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:$COMMIT_SHA', '-t', '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:latest', '.' ]
 
-# push now so it can be used in next step
+# Docker push so SHA can be used in next step
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:$COMMIT_SHA' ]
 
@@ -17,8 +18,8 @@ steps:
   - '$REPO_NAME'
   - --image
   - '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:$COMMIT_SHA'
-  - --region
-  - us-east1
+  - --region=$_GAR_REGION
+  - --set-env-vars=VERSION=$COMMIT_SHA
   - --ingress=all
   - --allow-unauthenticated
   - --execution-environment=gen2

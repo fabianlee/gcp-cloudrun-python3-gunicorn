@@ -23,11 +23,12 @@ def show_template(path):
 @app.route('/', defaults={'path':''})
 @app.route('/<path:path>')
 def show_default(path):
-    return f"{MESSAGE} called as: /{path}"
+    return f"{VERSION} {MESSAGE} called as: /{path}"
 
 
 # message from env var, with fallback
-MESSAGE = os.getenv("MESSAGE","Hello, World2!")
+VERSION = os.getenv("VERSION","")
+MESSAGE = os.getenv("MESSAGE","Hello, World!")
 
 # called as Flask app
 if __name__ == '__main__' or __name__ == "main":
