@@ -19,7 +19,7 @@ steps:
   - --image
   - '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:$COMMIT_SHA'
   - --region=$_GAR_REGION
-  - --set-env-vars=VERSION=SHA$SHORT_SHA
+  - --set-env-vars=VERSION=git-$SHORT_SHA
   - --ingress=all
   - --allow-unauthenticated
   - --execution-environment=gen2
