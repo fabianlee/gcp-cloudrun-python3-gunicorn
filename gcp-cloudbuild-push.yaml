@@ -6,25 +6,25 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:$COMMIT_SHA', '-t', '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:latest', '.' ]
 
-## Docker push so SHA can be used in next step
-#- name: 'gcr.io/cloud-builders/docker'
-#  args: ['push', '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:$COMMIT_SHA' ]
-#
-## deploy to GCP Cloud Run
-#- name: 'gcr.io/cloud-builders/gcloud'
-#  args:
-#  - run
-#  - deploy
-#  - '$REPO_NAME'
-#  - --image
-#  - '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:$COMMIT_SHA'
-#  - --region=$_GAR_REGION
-#  - --set-env-vars=VERSION=$COMMIT_SHA
-#  - --ingress=all
-#  - --allow-unauthenticated
-#  - --execution-environment=gen2
-#  - --no-use-http2
-#  - --quiet
+# Docker push so SHA can be used in next step
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:$COMMIT_SHA' ]
+
+# deploy to GCP Cloud Run
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - run
+  - deploy
+  - '$REPO_NAME'
+  - --image
+  - '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:$COMMIT_SHA'
+  - --region=$_GAR_REGION
+  - --set-env-vars=VERSION=$SHORT_SHA
+  - --ingress=all
+  - --allow-unauthenticated
+  - --execution-environment=gen2
+  - --no-use-http2
+  - --quiet
 
 # push all these images
 images:
