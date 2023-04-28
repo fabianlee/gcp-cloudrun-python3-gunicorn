@@ -8,6 +8,8 @@ images:
 
 #options:
 #  logging: CLOUD_LOGGING_ONLY
-#substitutions:
-#  _GAR_REGION: us-east1
-#  _GAR_REPO: my-gar-repo
+
+# default substitutions that will be used unless we override with '--substitutions' flag
+substitutions:
+  _GAR_REGION: us-east1
+  _GAR_REPO: my-gar-repo
