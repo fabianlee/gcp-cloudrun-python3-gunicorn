@@ -15,11 +15,11 @@ steps:
   args:
   - run
   - deploy
-  - '$REPO_NAME'
+  - $REPO_NAME
   - --image
   - '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:$TAG_NAME'
   - --region=$_GAR_REGION
-  - '--set-env-vars="VERSION=TAG $TAG_NAME"'
+  - --set-env-vars=VERSION=TAG$TAG_NAME
   - --ingress=all
   - --allow-unauthenticated
   - --execution-environment=gen2
