@@ -1,4 +1,9 @@
 # https://cloud.google.com/build/docs/building/build-containers#use-buildconfig
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'us-east1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/cloudbuild-yaml/gcp-cloudrun-python3-gunicorn:2.0.0', '.' ]
+  args: [ 'build', '-t', '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO//gcp-cloudrun-python3-gunicorn:2.0.0', '.' ]
+options:
+  logging: CLOUD_LOGGING_ONLY
+substitutions:
+  _GAR_REGION: us-east1
+  _GAR_REPO: my-gar-repo
