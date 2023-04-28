@@ -1,7 +1,7 @@
 # https://cloud.google.com/build/docs/building/build-containers#use-buildconfig
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:$COMMIT_SHA', '.' ]
+  args: [ 'build', '-t', '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:$COMMIT_SHA', '-t', '$_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:latest', '.' ]
 images:
 - $_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:$COMMIT_SHA
 - $_GAR_REGION-docker.pkg.dev/$PROJECT_ID/$_GAR_REPO/$REPO_NAME:latest
