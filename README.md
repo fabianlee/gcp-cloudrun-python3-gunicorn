@@ -2,6 +2,10 @@
 
 Test and deploy GCP Cloud Run Python Gunicorn web application.
 
+This project supports two different blog articles:
+  * (Deploying a Python WSGI Gunicorn app on Cloud Run)[https://fabianlee.org/2023/04/27/gcp-deploying-a-python-wsgi-gunicorn-app-on-cloud-run/]
+  * (Cloud Run with build trigger coming from remote GitHub repository)[https://fabianlee.org/2023/04/29/gcp-cloud-run-with-build-trigger-coming-from-remote-github-repository/]
+
 
 ### Getting Started with local development
 ```
