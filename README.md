@@ -70,7 +70,6 @@ gcloud run deploy $app_name --region=$region --ingress=all --allow-unauthenticat
 gcloud logging read "resource.type = \"cloud_run_revision\" AND resource.labels.service_name = \"$app_name\" AND resource.labels.location = $region AND severity>=DEFAULT AND textPayload !=''" --format="value(textPayload)" --limit 10
 ```
 
-
 ### Connect Github to to build trigger
 
 ```
@@ -78,12 +77,16 @@ gcloud services enable cloudbuild.googleapis.com secretmanager.googleapis.com so
 project_id=$(gcloud config get project)
 project_number=$(gcloud projects list --filter="id=$project_id" --format="value(projectNumber)")
 
-# show Cloud Run service account permissions
-# will return single role: 'roles/cloudbuild.builds.builder'
+# show Cloud Run Service Agent account (hidden by default in web UI)
+service_account="service-$project_number@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+gcloud projects get-iam-policy $project_id --flatten='bindings[].members' --filter="bindings.members:serviceaccount:${service_account}" --format='value(bindings.role)'
+
+# show Cloud Run Service Account permissions
+# will return single role initially: 'roles/cloudbuild.builds.builder'
 service_account="$project_number@cloudbuild.gserviceaccount.com"
 gcloud projects get-iam-policy $project_id --flatten='bindings[].members' --filter="bindings.members:serviceaccount:${service_account}" --format='value(bindings.role)'
 
-# assign IAM roles
+# assign additional IAM roles
 for role in roles/run.admin roles/iam.serviceAccountUser roles/secretmanager.secretAccessor; do
 gcloud projects add-iam-policy-binding $project_id --member=serviceAccount:$service_account --role=$role > /dev/null
 done
