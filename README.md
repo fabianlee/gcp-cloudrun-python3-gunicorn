@@ -72,7 +72,7 @@ gcloud logging read "resource.type = \"cloud_run_revision\" AND resource.labels.
 
 ### Connect Github to to GCP Cloud Build trigger
 
-See my full blog article below for building a GCP Continuous Deployment pipeline by conneting a remote GitHub repository.
+See my full blog article below for building a GCP Continuous Deployment pipeline by connecting a remote GitHub repository.
 
 https://fabianlee.org/2023/04/29/gcp-cloud-run-with-build-trigger-coming-from-remote-github-repository/
 
