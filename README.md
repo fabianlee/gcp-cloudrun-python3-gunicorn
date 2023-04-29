@@ -34,7 +34,6 @@ gcloud services enable cloudbuild.googleapis.com artifactregistry.googleapis.com
 # setup variables
 app_name="${PWD##*/}"
 region=$(gcloud config get compute/region)
-build_region=us-central1
 project_id=$(gcloud config get project)
 
 # deploy to GCP Cloud Run
@@ -71,37 +70,9 @@ gcloud run deploy $app_name --region=$region --ingress=all --allow-unauthenticat
 gcloud logging read "resource.type = \"cloud_run_revision\" AND resource.labels.service_name = \"$app_name\" AND resource.labels.location = $region AND severity>=DEFAULT AND textPayload !=''" --format="value(textPayload)" --limit 10
 ```
 
-### Connect Github to to build trigger
+### Connect Github to to GCP Cloud Build trigger
 
-```
-gcloud services enable cloudbuild.googleapis.com secretmanager.googleapis.com sourcerepo.googleapis.com
-project_id=$(gcloud config get project)
-project_number=$(gcloud projects list --filter="id=$project_id" --format="value(projectNumber)")
+See my full blog article below for building a GCP Continuous Deployment pipeline by conneting a remote GitHub repository.
 
-# add roles to Cloud Run Service Agent svc acct (hidden by default in web UI)
-service_account="service-$project_number@gcp-sa-cloudbuild.iam.gserviceaccount.com"
-gcloud projects add-iam-policy-binding $project_id --member=serviceAccount:$service_account --role=roles/secretmanager.secretAccessor > /dev/null
-
-gcloud projects get-iam-policy $project_id --flatten='bindings[].members' --filter="bindings.members:serviceaccount:${service_account}" --format='value(bindings.role)'
-
-# add roles to Cloud Run Service Account permissions
-service_account="$project_number@cloudbuild.gserviceaccount.com"
-for role in roles/run.admin roles/iam.serviceAccountUser roles/secretmanager.secretAccessor; do
-gcloud projects add-iam-policy-binding $project_id --member=serviceAccount:$service_account --role=$role > /dev/null
-done
-
-gcloud projects get-iam-policy $project_id --flatten='bindings[].members' --filter="bindings.members:serviceaccount:${service_account}" --format='value(bindings.role)'
-```
-
-
-
-
-
-
-
-
-
-
-
-
+https://fabianlee.org/2023/04/29/gcp-cloud-run-with-build-trigger-coming-from-remote-github-repository/
 
